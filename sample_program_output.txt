@@ -1,0 +1,36 @@
+Obstacles:
+[(start)-R(24,6)-R(28,6)-R(28,12)-R(26,17)-R(25,19)-R(23,25)-R(21,30)-R(19,34)-R(15,34)-R(14,31)-R(14,26)-R(15,22)-R(19,12)-R(20,5)(end)]
+[(start)-R(10,10)-R(15,2)-R(12,15)(end)]
+
+FindPath test:
+Find a path around these obstacles from (6,7) to (32,23) ...
+Path finding complete!
+---------------------------
+Original route:
+[(start)-R(6,7)-L(10.243055,9.611111)-L(10,10)-L(12,15)-L(12.870466,11.227980)-R(18.037037,14.407408)-R(19,12)-R(20,5)-R(24,6)-R(28,6)-R(28,12)-R(26,17)-R(25.117647,18.764706)-R(32,23)(end)]
+of length 59.9898
+---------------------------
+Optimized route is
+[(start)-R(6,7)-L(12,15)-R(20,5)-R(28,6)-R(32,23)(end)]
+of length 48.3328
+---------------------------
+(Approx.) wxMaxima code to visualize the path
+ (delete trailing commas in coord lists):
+wxplot2d([discrete,
+[6,12,20,28,32,],
+[7,15,5,6,23,]],
+[x,0,35],[y,0,35])
+
+(Approx.) wxMaxima code to visualize the first obstacle
+ (delete trailing commas in coord lists):
+wxplot2d([discrete,
+[24,28,28,26,25,23,21,19,15,14,14,15,19,20,],
+[6,6,12,17,19,25,30,34,34,31,26,22,12,5,]],
+[x,0,35],[y,0,35])
+
+(Approx.) wxMaxima code to visualize the second obstacle
+ (delete trailing commas in coord lists):
+wxplot2d([discrete,
+[10,15,12,],
+[10,2,15,]],
+[x,0,35],[y,0,35])
