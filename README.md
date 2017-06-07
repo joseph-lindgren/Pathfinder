@@ -10,7 +10,7 @@ non-member functions below to perform this task. There is also a
 function written to optimize the avoidance path by cutting corners 
 in the route wherever possible.
  
-The "DEBUGGING" flag can be turned on to see more details of the 
+The "DEBUGGING" flag can be set to show more details of the 
 process. Some (almost correct) WxMaxima code is generated at the end
 of the program output to help the user visualize what the 
 program has accomplished.
