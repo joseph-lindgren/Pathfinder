@@ -76,7 +76,7 @@ class CPair
 		float operator*( const CPair & rhs );
 		const CPair operator*( float scalar );
 
-		char * SPrint(void);
+		string SPrint(void);
 		float GetX(void);
 		float GetY(void);
 		
@@ -197,8 +197,8 @@ const CPair CPair::operator*( float scalar )
 
 ///
 
-char * CPair::SPrint(void)
-// Prints a string describing the pair
+string CPair::SPrint(void)
+// Returns a string describing the pair
 {
 	char * pair;
 	pair = new char[50];
@@ -206,7 +206,11 @@ char * CPair::SPrint(void)
 		snprintf( pair, 50, "(%d,%d)", (int)(this->x), (int)(this->y) );
 	else
 		snprintf( pair, 50, "(%f,%f)", this->x, this->y);
-	return pair;
+	
+	string str;
+	str.assign(pair);
+	delete [] pair;
+	return str;
 }
 
 float CPair::GetX(void)
@@ -250,14 +254,11 @@ CPair CPair::Normal(void)
 
 void PrintPath( list<CPair> * path )
 {
-	char * temp;
 	cout << "[(start)";
 	for ( CPair & pt : *path )
 	{
-		temp = pt.SPrint();
 		cout << ( pt.GetSide() ? "-R" : "-L" )
-			 << temp;
-		delete [] temp;
+			 << pt.SPrint();
 	}
 	cout << "(end)]" << endl;
 }
@@ -822,17 +823,18 @@ bool OptimizePath( list<CPair> * sequence, list<CObstacle> * obstacles, float to
 }
 
 
-//Global variables
-list<CPair> 	Obstacle1 =
-	{ CPair(24,6), CPair(28,6), CPair(28,12), CPair(26,17), CPair(25,19),
-	  CPair(23,25), CPair(21,30), CPair(19,34), CPair(15,34), CPair(14,31),
-	  CPair(14,26), CPair(15,22), CPair(19,12), CPair(20,5) },
-				Obstacle2 = { CPair(10,10), CPair(15,2), CPair(12,15) };
 
 /// MAIN ///////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv)
 {
+	//Test Data
+	list<CPair> 	Obstacle1 =
+	{ CPair(24,6), CPair(28,6), CPair(28,12), CPair(26,17), CPair(25,19),
+	  CPair(23,25), CPair(21,30), CPair(19,34), CPair(15,34), CPair(14,31),
+	  CPair(14,26), CPair(15,22), CPair(19,12), CPair(20,5) },
+					Obstacle2 = { CPair(10,10), CPair(15,2), CPair(12,15) };
+
 	CObstacle 	obstacle1(&Obstacle1),
 				obstacle2(&Obstacle2);
 
@@ -854,11 +856,9 @@ int main(int argc, char **argv)
 		obs_list.push_back(obstacle2);
 
 		//Find an avoidance path from start to end.
-		char * temp1 = start.SPrint(), * temp2 = end.SPrint();
 		cout << "Find a path around these obstacles from " 
-			 << temp1 << " to " << temp2 << " ..."
+			 << start.SPrint() << " to " << end.SPrint() << " ..."
 			 << endl;
-		delete [] temp1, delete [] temp2;
 		route2 = FindPath( {start, end}, &obs_list );
 		cout << "Path finding complete!" << endl;
 
@@ -868,7 +868,7 @@ int main(int argc, char **argv)
 		PrintPath(&route2);
 		cout << "of length " << PathLen(&route2) << endl;
 
-		//Optimize the route by cutting empty corner.
+		//Optimize the route by cutting empty corners.
 		OptimizePath( &route2, &obs_list, 0.001 );
 
 		//Print the optimized route.
