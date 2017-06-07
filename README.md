@@ -12,5 +12,5 @@ in the route wherever possible.
  
 The "DEBUGGING" flag can be turned on to see more details of the 
 process. Some (almost correct) WxMaxima code is generated at the end
-of the program output to help the programmer visualize what the 
+of the program output to help the user visualize what the 
 program has accomplished.
